@@ -13,8 +13,7 @@
   </div>
   <BR/>
   <div id="dialogBox" style="width:95%; height:80%; overflow:auto; border:ridge 1px #888888; ">
-> 您好，我的朋友! 有心事嗎 ?<BR/>  
-
+>> 您好，我的朋友! 有心事嗎 ?<BR/>  
   </div>
   <script type="text/javascript">  
 /* 以下為本程式回答問題時使用的 Q&A 規則，例如對於以下 Q&A 規則物件
@@ -72,12 +71,11 @@ var qaList = [
 { Q:"", A:"我了解|我能理解|還有問題嗎 ?|請繼續說下去|可以說的更詳細一點嗎?|這樣喔!我知道!|然後呢?發生甚麼事?|再來呢?可以多說一些嗎|接下來呢?|可以多告訴我一些嗎?|多談談有關你的事，好嗎?|想多聊一聊嗎|可否多告訴我一些呢?"}
 ];  
   
-  // when we get a message from the app, display it on the page
+// when we get a message from the app, display it on the page
 ThunkableWebviewerExtension.receiveMessage(function(message) {
   // Do something with your message
   say(message);
-});
-
+});  
   
   
   
@@ -87,8 +85,8 @@ ThunkableWebviewerExtension.receiveMessage(function(message) {
     }
     
     function say(message) { // 當送出鍵按下時，會呼叫這個函數進行回答動作
-    document.getElementById("say").value = message;
-      append(message); // 先將使用者輸入的問句放到「對話區」顯示。
+      document.getElementById("say").value = message;
+	  append(message); // 先將使用者輸入的問句放到「對話區」顯示。
       answer(); // 然後回答使用者的問題。
     }
     
@@ -104,15 +102,16 @@ ThunkableWebviewerExtension.receiveMessage(function(message) {
     }
 
     function answer() { // 回答問題
-	
-	var ans=getAnswer();
-	
-	
+    
+    var ans = getAnswer();
+
       setTimeout(function () { // 停頓 1 到 3 秒再回答問題 (因為若回答太快就不像人了，人打字需要時間)
-        append(">> "+ ans());
+        append(">> "+ ans);
       }, 1000+random(2000));
+    
+	  ThunkableWebviewerExtension.postMessage(ans);	
     }
-	ThunkableWebviewerExtension.postMessage('hello world');
+	
     
     function getAnswer() {
       var say = document.getElementById("say").value; // 取得使用者輸入的問句。
